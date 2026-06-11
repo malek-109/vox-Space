@@ -90,7 +90,30 @@ footer{border-top:1px solid var(--border);background:var(--surface);padding:40px
 
 .sr{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
 .sr.in{opacity:1;transform:none}
-@media(max-width:900px){nav{padding:0 20px}.nav-center{display:none}.wrap{padding:0 20px}.founder-grid{grid-template-columns:1fr;gap:32px;padding:32px}.values-grid{grid-template-columns:1fr}.foot-bottom{flex-direction:column;gap:12px}}
+@media(max-width:900px){
+  nav{padding:0 16px}
+  .nav-center{display:none}
+  .wrap{padding:0 16px}
+  .founder-grid{grid-template-columns:1fr;gap:24px;padding:32px}
+  .values-grid{grid-template-columns:1fr}
+  .foot-bottom{flex-direction:column;gap:10px}
+}
+@media(max-width:600px){
+  nav{padding:0 12px;height:56px}
+  nav .nav-brand span{display:none}
+  nav .nav-brand img{height:28px}
+  .page-top{padding:80px 16px 40px}
+  .page-h{font-size:clamp(26px,5vw,36px)}
+  .page-sub{font-size:14px}
+  .wrap{padding:0 12px}
+  .founder-grid{padding:20px 16px}
+  .founder-monogram{max-width:160px}
+  .f-bio{font-size:13px}
+  .f-quote{font-size:13px;padding:12px 14px}
+  .section-title{font-size:clamp(18px,4vw,24px)}
+  .egypt-h{font-size:clamp(20px,4vw,28px)}
+  .egypt-p{font-size:13px}
+}
 </style>
 </head>
 <body>
