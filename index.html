@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vox Space - Jamstack Hosting</title>
+    <!-- تضمين الـ Tailwind CSS عبر الـ CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // تخصيص الألوان والأنيميشن لتناسب الهوية البصرية للوجو
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#030712',
+                        cardBg: '#0b0f19',
+                        sidebarBg: '#070b18',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* تخصيص الـ Selection والتأثيرات التي لا تدعمها التيلويند بشكل مباشر في الـ CDN */
+        ::selection {
+            background-color: #6366f1;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-white font-sans min-h-screen">
+
+    <!-- --- الهيدر العلوي --- -->
+    <header class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto border-b border-gray-800/50 backdrop-blur-md sticky top-0 z-40">
+        <div class="flex items-center gap-3">
+            <!-- مسار اللوجو بدون خلفية كما طلبت -->
+            <img src="img/logo.png" alt="Vox Space Logo" class="w-10 h-10 object-contain">
+            <span id="brand-name" class="text-xl font-bold tracking-wider bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+                فوكس سبيس
+            </span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <!-- قائمة اختيار اللغات الأربعة -->
+            <select id="lang-select" class="bg-gray-900 border border-gray-700 text-sm rounded-lg px-2 py-1 focus:outline-none focus:border-indigo-500 text-white cursor-pointer">
+                <option value="ar">العربية</option>
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+            </select>
+
+            <!-- زر فتح القائمة الجانبية -->
+            <button id="open-sidebar" class="p-2 bg-gray-900 border border-gray-800 rounded-lg hover:border-gray-700 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" strokeLinejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- --- القائمة الجانبية (Sidebar) --- -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 opacity-0 invisible transition-all duration-300">
+        <div id="sidebar" class="fixed top-0 bottom-0 w-80 bg-sidebarBg border-gray-800 p-6 shadow-2xl transition-all duration-300 z-50 right-0 translate-x-full border-l">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo.png" alt="Logo" class="w-8 h-8">
+                    <span id="sidebar-brand" class="font-bold text-lg">فوكس سبيس</span>
+                </div>
+                <!-- زر إغلاق السايدبار -->
+                <button id="close-sidebar" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- روابط التنقل -->
+            <nav class="flex flex-col gap-4 text-lg text-gray-300">
+                <a href="index.html" id="nav-home" class="hover:text-indigo-400 transition py-2 border-b border-gray-900">الرئيسية</a>
+                <a href="pricing.html" id="nav-pricing" class="hover:text-indigo-400 transition py-2 border-b border-gray-900">الأسعار</a>
+                <a href="docs.html" id="nav-docs" class="hover:text-indigo-400 transition py-2 border-b border-gray-900">التوثيق</a>
+                <a href="about.html" id="nav-about" class="hover:text-indigo-400 transition py-2 border-b border-gray-900">من نحن</a>
+                <a href="contact.html" id="nav-contact" class="hover:text-indigo-400 transition py-2 border-b border-gray-900">اتصل بنا</a>
+                <a href="privacy.html" id="nav-privacy" class="hover:text-indigo-400 transition py-2 border-b border-gray-900 text-sm text-gray-500">الخصوصية</a>
+                <a href="terms.html" id="nav-terms" class="hover:text-indigo-400 transition py-2 text-sm text-gray-500">الشروط</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- --- قسم الـ Hero Section --- -->
+    <section class="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center relative overflow-hidden">
+        <!-- إضاءة جمالية خلفية تعكس ألوان البراند -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+
+        <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent">
+            استضافة الـ Jamstack بسرعة الصاروخ
+        </h1>
+        <p id="hero-desc" class="text-gray-400 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
+            ارفع مشاريع React ومواقعك الـ Static في ثوانٍ معدودة. دعم كامل لـ GitHub والرفع المباشر بدون تعقيد السيرفرات.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button id="btn-get-started" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-indigo-900/40 transition-all duration-200">
+                ابدأ الآن مجاناً
+            </button>
+            <button id="btn-view-docs" class="w-full sm:w-auto px-8 py-3.5 bg-gray-900 text-gray-300 font-semibold rounded-xl border border-gray-800 hover:border-gray-700 hover:text-white transition-all duration-200">
+                اقرأ التوثيق
+            </button>
+        </div>
+    </section>
+
+    <!-- --- قسم المميزات (Features) --- -->
+    <section class="max-w-7xl mx-auto px-6 py-20 border-t border-gray-900">
+        <h2 id="features-title" class="text-2xl md:text-4xl font-bold text-center mb-12">
+            لماذا تختار Vox Space؟
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- ميزة 1 -->
+            <div class="bg-cardBg border border-gray-800/80 p-6 rounded-2xl hover:border-indigo-500/50 transition duration-300">
+                <div class="w-12 h-12 bg-indigo-600/10 rounded-xl flex items-center justify-center text-indigo-400 mb-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                </div>
+                <h3 id="feat1-title" class="text-xl font-bold mb-2">رفع تلقائي من GitHub</h3>
+                <p id="feat1-desc" class="text-gray-400 text-sm leading-relaxed">بمجرد عمل Push لكودك، سيتم بناء موقعك وتحديثه لايف.</p>
+            </div>
+
+            <!-- ميزة 2 -->
+            <div class="bg-cardBg border border-gray-800/80 p-6 rounded-2xl hover:border-blue-500/50 transition duration-300">
+                <div class="w-12 h-12 bg-blue-600/10 rounded-xl flex items-center justify-center text-blue-400 mb-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h3 id="feat2-title" class="text-xl font-bold mb-2">سرعة CDN عالمية</h3>
+                <p id="feat2-desc" class="text-gray-400 text-sm leading-relaxed">موقعك سيفتح من أقرب سيرفر لعميلك بفضل شبكتنا السحابية.</p>
+            </div>
+
+            <!-- ميزة 3 -->
+            <div class="bg-cardBg border border-gray-800/80 p-6 rounded-2xl hover:border-purple-500/50 transition duration-300">
+                <div class="w-12 h-12 bg-purple-600/10 rounded-xl flex items-center justify-center text-purple-400 mb-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <h3 id="feat3-title" class="text-xl font-bold mb-2">سب دومين مجاني ومحمي</h3>
+                <p id="feat3-desc" class="text-gray-400 text-sm leading-relaxed">احصل على رابط خاص بمشروعك فوراً مع شهادة أمان SSL تلقائية.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- السكريبت البرمجي للتحكم باللغات والسايدبار --- -->
+    <script>
+        // 1. قاموس البيانات للغات الأربعة
+        const translations = {
+            ar: {
+                dir: 'rtl',
+                brand: 'فوكس سبيس',
+                heroTitle: 'استضافة الـ Jamstack بسرعة الصاروخ',
+                heroDesc: 'ارفع مشاريع React ومواقعك الـ Static في ثوانٍ معدودة. دعم كامل لـ GitHub والرفع المباشر بدون تعقيد السيرفرات.',
+                getStarted: 'ابدأ الآن مجاناً',
+                viewDocs: 'اقرأ التوثيق',
+                featuresTitle: 'لماذا تختار Vox Space؟',
+                feat1Title: 'رفع تلقائي من GitHub',
+                feat1Desc: 'بمجرد عمل Push لكودك، سيتم بناء موقعك وتحديثه لايف.',
+                feat2Title: 'سرعة CDN عالمية',
+                feat2Desc: 'موقعك سيفتح من أقرب سيرفر لعميلك بفضل شبكتنا السحابية.',
+                feat3Title: 'سب دومين مجاني ومحمي',
+                feat3Desc: 'احصل على رابط خاص بمشروعك فوراً مع شهادة أمان SSL تلقائية.',
+                navHome: 'الرئيسية', navPricing: 'الأسعار', navDocs: 'التوثيق', navAbout: 'من نحن', navContact: 'اتصل بنا', navPrivacy: 'الخصوصية', navTerms: 'الشروط'
+            },
+            en: {
+                dir: 'ltr',
+                brand: 'Vox Space',
+                heroTitle: 'Jamstack Hosting at Rocket Speed',
+                heroDesc: 'Deploy your React projects and static websites in seconds. Full GitHub integration and direct uploads without server hassle.',
+                getStarted: 'Get Started Free',
+                viewDocs: 'Read Docs',
+                featuresTitle: 'Why Choose Vox Space?',
+                feat1Title: 'Automated GitHub Deploy',
+                feat1Desc: 'Just push your code, and your site will be built and updated live.',
+                feat2Title: 'Global CDN Speed',
+                feat2Desc: 'Your site loads from the closest server to your user via our cloud network.',
+                feat3Title: 'Free Secured Subdomain',
+                feat3Desc: 'Get a custom project link instantly with automatic SSL protection.',
+                navHome: 'Home', navPricing: 'Pricing', navDocs: 'Docs', navAbout: 'About Us', navContact: 'Contact Us', navPrivacy: 'Privacy Policy', navTerms: 'Terms'
+            },
+            fr: {
+                dir: 'ltr',
+                brand: 'Vox Space',
+                heroTitle: 'Hébergement Jamstack à la vitesse de la fusée',
+                heroDesc: 'Déployez vos projets React et sites statiques en quelques secondes. Intégration GitHub complète sans tracas de serveur.',
+                getStarted: 'Commencer Gratuitement',
+                viewDocs: 'Lire la Doc',
+                featuresTitle: 'Pourquoi choisir Vox Space?',
+                feat1Title: 'Déploiement GitHub Automatique',
+                feat1Desc: 'Poussez simplement votre code, votre site sera mis à jour en direct.',
+                feat2Title: 'Vitesse CDN Globale',
+                feat2Desc: 'Votre site se charge depuis le serveur le plus proche de votre utilisateur.',
+                feat3Title: 'Sous-domaine Sécurisé Gratuit',
+                feat3Desc: 'Obtenez un lien de projet instantané avec protection SSL automatique.',
+                navHome: 'Accueil', navPricing: 'Tarifs', navDocs: 'Docs', navAbout: 'À propos', navContact: 'Contactez-nous', navPrivacy: 'Confidentialité', navTerms: 'Conditions'
+            },
+            de: {
+                dir: 'ltr',
+                brand: 'Vox Space',
+                heroTitle: 'Jamstack-Hosting in Raketengeschwindigkeit',
+                heroDesc: 'Veröffentlichen Sie Ihre React-Projekte und statischen Websites in Sekundenschnelle. Volle GitHub-Integration ohne Server-Stress.',
+                getStarted: 'Kostenlos Starten',
+                viewDocs: 'Dokumentation',
+                featuresTitle: 'Warum Vox Space wählen?',
+                feat1Title: 'Automatisierter GitHub-Deploy',
+                feat1Desc: 'Push deinen Code, und deine Seite wird live gebaut und aktualisiert.',
+                feat2Title: 'Globale CDN-Geschwindigkeit',
+                feat2Desc: 'Ihre Website lädt über unser Cloud-Netwzerk vom nächstgelegenen Server.',
+                feat3Title: 'Kostenlose sichere Subdomain',
+                feat3Desc: 'Holen Sie sich sofort einen Projekt-Link mit automatischem SSL-Schutz.',
+                navHome: 'Startseite', navPricing: 'Preise', navDocs: 'Docs', navAbout: 'Über uns', navContact: 'Kontakt', navPrivacy: 'Datenschutz', navTerms: 'AGB'
+            }
+        };
+
+        // 2. منطق تبديل اللغات وتحديث عناصر الـ DOM
+        const langSelect = document.getElementById('lang-select');
+        
+        function updateLanguage(lang) {
+            const t = translations[lang];
+            
+            // تحديث الاتجاه العام للصفحة (RTL أو LTR)
+            document.documentElement.dir = t.dir;
+            document.documentElement.lang = lang;
+
+            // تحديث النصوص في الصفحة
+            document.getElementById('brand-name').innerText = t.brand;
+            document.getElementById('sidebar-brand').innerText = t.brand;
+            document.getElementById('hero-title').innerText = t.heroTitle;
+            document.getElementById('hero-desc').innerText = t.heroDesc;
+            document.getElementById('btn-get-started').innerText = t.getStarted;
+            document.getElementById('btn-view-docs').innerText = t.viewDocs;
+            document.getElementById('features-title').innerText = t.featuresTitle;
+            
+            document.getElementById('feat1-title').innerText = t.feat1Title;
+            document.getElementById('feat1-desc').innerText = t.feat1Desc;
+            document.getElementById('feat2-title').innerText = t.feat2Title;
+            document.getElementById('feat2-desc').innerText = t.feat2Desc;
+            document.getElementById('feat3-title').innerText = t.feat3Title;
+            document.getElementById('feat3-desc').innerText = t.feat3Desc;
+
+            // تحديث روابط السايدبار
+            document.getElementById('nav-home').innerText = t.navHome;
+            document.getElementById('nav-pricing').innerText = t.navPricing;
+            document.getElementById('nav-docs').innerText = t.navDocs;
+            document.getElementById('nav-about').innerText = t.navAbout;
+            document.getElementById('nav-contact').innerText = t.navContact;
+            document.getElementById('nav-privacy').innerText = t.navPrivacy;
+            document.getElementById('nav-terms').innerText = t.navTerms;
+
+            // ضبط مكان وتصميم السايدبار بناءً على الاتجاه الحالي
+            const sidebar = document.getElementById('sidebar');
+            if (t.dir === 'rtl') {
+                sidebar.classList.remove('left-0', '-translate-x-full', 'border-r');
+                sidebar.classList.add('right-0', 'border-l');
+                if (!sidebar.classList.contains('translate-x-full')) {
+                    sidebar.classList.add('translate-x-full');
+                }
+            } else {
+                sidebar.classList.remove('right-0', 'translate-x-full', 'border-l');
+                sidebar.classList.add('left-0', 'border-r');
+                if (!sidebar.classList.contains('-translate-x-full')) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        }
+
+        langSelect.addEventListener('change', (e) => {
+            updateLanguage(e.target.value);
+        });
+
+        // 3. منطق فتح وإغلاق القائمة الجانبية (Sidebar)
+        const openBtn = document.getElementById('open-sidebar');
+        const closeBtn = document.getElementById('close-sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const sidebar = document.getElementById('sidebar');
+
+        function toggleSidebar(isOpen) {
+            const currentDir = document.documentElement.dir;
+            if (isOpen) {
+                overlay.classList.remove('opacity-0', 'invisible');
+                if (currentDir === 'rtl') {
+                    sidebar.classList.remove('translate-x-full');
+                } else {
+                    sidebar.classList.remove('-translate-x-full');
+                }
+            } else {
+                overlay.classList.add('opacity-0', 'invisible');
+                if (currentDir === 'rtl') {
+                    sidebar.classList.add('translate-x-full');
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        }
+
+        openBtn.addEventListener('click', () => toggleSidebar(true));
+        closeBtn.addEventListener('click', () => toggleSidebar(false));
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) toggleSidebar(false);
+        });
+
+        // تشغيل اللغة الافتراضية عند أول تحميل للموقع
+        updateLanguage('ar');
+    </script>
+</body>
+</html>
